@@ -35,6 +35,9 @@ export default class JaxPlugin extends Plugin {
     //
     Object.defineProperty(window, 'MathJax', {
       set(o) {
+        o.loader = { load: ['[tex]/mhchem', '[tex]/bussproofs'] };
+        o.tex.packages = { '[+]': ['mhchem', 'bussproofs']};
+
         o.startup.ready = () => {
           MathJax.startup.defaultReady();
 
