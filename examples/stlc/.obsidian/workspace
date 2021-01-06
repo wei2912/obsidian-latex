@@ -1,0 +1,92 @@
+{
+  "main": {
+    "id": "b42b12c1bc5c24b7",
+    "type": "split",
+    "children": [
+      {
+        "id": "03f8128fe6e11b12",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Typing.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "3324b6204fbe39de",
+    "type": "split",
+    "children": [
+      {
+        "id": "e91c48a3ed998f51",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7f4de1f49086f926",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "933d59a0ec818683",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "25c10e328e92dcad",
+    "type": "split",
+    "children": [
+      {
+        "id": "e75fccf8cb74beb2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6839ac5f54e5776b",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Typing.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "Typing.md",
+    "Untitled.md"
+  ]
+}
