@@ -20,41 +20,13 @@ export default class JaxPlugin extends Plugin {
   }
 
 	onload() {
-    var omg = this;
-    
-    var content : String | null = null;
+    // Remove mathjax script tag
+    Array.from(document.getElementsByTagName("script"))
+      .filter(s => s.src.includes("math"))[0].remove();
 
-    // Hack to extend the MathJax configuration
-    // We need this as plugin initialization is called before MathJax is loaded in Obsidian, 
-    // but if we wait until later the math will already have been typeset!
-    // We rely on this order of events occuring: layout-change --> plugin loading --> mathjax init --> initial document rendering
-    // With this in mind the idea is the following: 
-    // - use `layout-change` to capture the preamble at startup (before mathjax).
-    // - Use defineProperty to patch the mathjax configuration created after plugin loading by Obsidian.
-    // - Render the preamble during mathjax startup
-    //
-    Object.defineProperty(window, 'MathJax', {
-      set(o) {
-        o.loader = { load: ['[tex]/mhchem', '[tex]/bussproofs'] };
-        o.tex.packages = { '[+]': ['mhchem', 'bussproofs']};
-
-        o.startup.ready = () => {
-          MathJax.startup.defaultReady();
-
-          MathJax.tex2chtml(content);
-        }
-
-        delete window.MathJax;
-        window.MathJax = o;
-      },
-      configurable: true,
-    });
-
-    this.app.workspace.on('layout-change', () => {
-      if (content == null) {
-          this.read_preamble().then((c) => content = c);
-      }
-    });
+    window.MathJax = {
+      tex2chtml: s => console.log(s)
+    }
 	}
 
 	onunload() {
