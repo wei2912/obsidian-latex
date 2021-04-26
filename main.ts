@@ -20,45 +20,26 @@ export default class JaxPlugin extends Plugin {
   }
 
 	onload() {
-    var omg = this;
-    
-    var content : String | null = null;
+    var preludeLoaded = false;
 
-    // Hack to extend the MathJax configuration
-    // We need this as plugin initialization is called before MathJax is loaded in Obsidian, 
-    // but if we wait until later the math will already have been typeset!
-    // We rely on this order of events occuring: layout-change --> plugin loading --> mathjax init --> initial document rendering
-    // With this in mind the idea is the following: 
-    // - use `layout-change` to capture the preamble at startup (before mathjax).
-    // - Use defineProperty to patch the mathjax configuration created after plugin loading by Obsidian.
-    // - Render the preamble during mathjax startup
-    //
-    Object.defineProperty(window, 'MathJax', {
-      set(o) {
-        o.loader = { load: ['[tex]/mhchem', '[tex]/bussproofs'] };
-        o.tex.packages = { '[+]': ['mhchem', 'bussproofs']};
+    this.registerMarkdownPostProcessor((el, ctx) => {
 
-        o.startup.ready = () => {
-          MathJax.startup.defaultReady();
+      if (typeof MathJax != 'undefined' && content == null) {
+          this.read_preamble().then((c) => {
+            MathJax.tex2chtml(c);
 
-          MathJax.tex2chtml(content);
-        }
-
-        delete window.MathJax;
-        window.MathJax = o;
-      },
-      configurable: true,
-    });
-
-    this.app.workspace.on('layout-change', () => {
-      if (content == null) {
-          this.read_preamble().then((c) => content = c);
+            // Refresh the active view
+            let activeLeaf = window.app.workspace.activeLeaf;
+            let preview = activeLeaf.view.previewMode;
+            preview.set(preview.get(), true)
+          });
       }
-    });
+
+    })
 	}
 
 	onunload() {
-		console.log('unloading plugin');
+		console.log('Unloading Extended MathJax');
 	}
 }
 
