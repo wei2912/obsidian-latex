@@ -23,11 +23,18 @@ export default class JaxPlugin extends Plugin {
     var preludeLoaded = false;
 
     this.registerMarkdownPostProcessor((el, ctx) => {
-
-      if (typeof MathJax != 'undefined' && content == null) {
+      if (typeof MathJax != 'undefined' && !preludeLoaded) {
           this.read_preamble().then((c) => {
-            MathJax.tex2chtml(c);
+            preludeLoaded = true;
 
+            if (MathJax.tex2chtml == undefined) {
+              MathJax.startup.ready = () => {
+                MathJax.startup.defaultReady();
+                MathJax.tex2chtml(c);
+              }
+            } else {
+              MathJax.tex2chtml(c);
+            }
             // Refresh the active view
             let activeLeaf = window.app.workspace.activeLeaf;
             let preview = activeLeaf.view.previewMode;
