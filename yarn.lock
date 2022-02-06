@@ -213,10 +213,10 @@ moment@2.29.1:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
-obsidian@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-0.12.0.tgz#830286aaaa3efd17a11b4205510c6b386ca20b1a"
-  integrity sha512-0C6xb1xfYFaFjz5Q00XS0bT5y1BSFrl75sTV/MN/gOIWIPkyTTPZAtXZIy0dAnDwwIVgE3eB60HpfUI9xiBFGQ==
+obsidian@^0.12.16:
+  version "0.12.17"
+  resolved "https://registry.yarnpkg.com/obsidian/-/obsidian-0.12.17.tgz#8efe75310d0e3988cdeccfbb176d3a8ff7b363c7"
+  integrity sha512-YvCAlRym9D8zNPXt6Ez8QubSTVGoChx6lb58zqI13Dcrz3l1lgUO+pcOGDiD5Qa67nzDZLXo3aV2rqkCCpTvGQ==
   dependencies:
     "@types/codemirror" "0.0.108"
     moment "2.29.1"
