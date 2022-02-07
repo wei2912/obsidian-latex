@@ -1,46 +1,39 @@
-import {  Notice, Plugin } from 'obsidian';
-import { readFileSync } from 'fs';
+import { loadMathJax, Plugin } from 'obsidian';
 
 const DEFAULT_PREAMBLE_PATH = "preamble.sty";
 
 export default class JaxPlugin extends Plugin {
   async read_preamble () {
-      const file = this.app.vault.getAbstractFileByPath(DEFAULT_PREAMBLE_PATH);
-      console.log(`Loading preamble from ${file}`);
-      const content = await this.app.vault.read(file);
-      return content;
+    return await this.app.vault.adapter.read(DEFAULT_PREAMBLE_PATH);
   }
 
-	onload() {
-    var preludeLoaded = false;
+	async onload() {
+    // Load MathJax so that we can modify it
+    // Otherwise, it would not be loaded when this plugin is loaded
+    await loadMathJax();
 
-    this.registerMarkdownPostProcessor((el, ctx) => {
-      if (typeof MathJax != 'undefined' && !preludeLoaded) {
-          this.read_preamble().then((c) => {
-            preludeLoaded = true;
+    if (!MathJax) {
+      console.warn("MathJax was not defined despite loading it.");
+      return;
+    }
 
-            // Check if MathJax has already loaded and render the preamble
-            if (MathJax.tex2chtml == undefined) {
-              MathJax.startup.ready = () => {
-                MathJax.startup.defaultReady();
-                MathJax.tex2chtml(c);
-              }
-            } else {
-              MathJax.tex2chtml(c);
-            }
+    // Read the preamble out from the file
+    let preamble = await this.read_preamble();
+    
+    if (MathJax.tex2chtml == undefined) {
+      MathJax.startup.ready = () => {
+        MathJax.startup.defaultReady();
+        MathJax.tex2chtml(preamble);
+      };
+    } else {
+      MathJax.tex2chtml(preamble);
+    }
 
-            // Refresh the active view to re-render its math content
-            let activeLeaf = window.app.workspace.activeLeaf;
-            let preview = activeLeaf.view.previewMode;
-            preview.set(preview.get(), true)
-          });
-      }
-
-    })
+    // TODO: Refresh view?
 	}
 
 	onunload() {
+    // TODO: Is it possible to remove our definitions?
 		console.log('Unloading Extended MathJax');
 	}
 }
-
