@@ -1,3 +1,5 @@
+⚠️ Looking for someone to take this plugin over! ⚠️
+
 ## Obsidian Extended MathJax
 
 This plugin extends the MathJax support in Obsidian with a MathJax preamble file which is loaded at startup. It also enables some additional MathJax extensions (notably `mhchem` and `bussproofs`). 
