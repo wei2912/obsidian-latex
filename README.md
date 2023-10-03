@@ -2,7 +2,7 @@
 
 This plugin extends the MathJax support in Obsidian with a MathJax preamble file which is loaded at startup. It also enables some additional MathJax extensions (notably `mhchem` and `bussproofs`). 
 
-The preamble is stored in a `preamble.sty` file in the root of the vault. To reload changes to the preamble run the command "Reload app without saving."
+The preamble is stored in a `preamble.sty` file in the root of the vault.
 
 ### Installation 
 
@@ -12,7 +12,7 @@ The preamble is stored in a `preamble.sty` file in the root of the vault. To rel
 
 ### Changing your preamble
 
-If you make changes to your preamble you will need to reload it. To do this run `⌘ + R` / `Ctrl + R` to refresh Obsidian. This will reload all your obsidian plugins and update your preamble. 
+If you make changes to your preamble you will need to run the command "Reload app without saving". This will reload all your Obsidian plugins and your preamble. 
 
 ### Example
 
