@@ -6,7 +6,7 @@ The preamble is stored in a `preamble.sty` file in the root of the vault.
 
 ### Installation 
 
-1. Install 'Extended MathJax' from the Obsidian community plugin browser or by clicking on this link: [obsidian://show-plugin?id=obsidian-latex](obsidian://show-plugin?id=obsidian-latex).
+1. Install 'Extended MathJax' from the Obsidian community plugin browser or by navigating to this link: [`obsidian://show-plugin?id=obsidian-latex`](obsidian://show-plugin?id=obsidian-latex).
 2. Create a `preamble.sty` file in the root of your vault using your choice of text editor.
 3. Add your macros to `preamble.sty`
 
@@ -26,4 +26,5 @@ There are two common reasons why your preamble is not read:
 ### Example
 
 Look at [`examples/stlc`](https://github.com/wei2912/obsidian-latex/tree/master/examples/stlc) for an example of an obsidian vault using a preamble to define custom macros. 
+
 
