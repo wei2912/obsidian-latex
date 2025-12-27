@@ -1,4 +1,4 @@
-import { loadMathJax, App, Plugin, PluginManifest, PluginSettingTab, Setting } from 'obsidian';
+import { TFile, Notice, loadMathJax, App, Plugin,  PluginManifest, PluginSettingTab, Setting, normalizePath } from 'obsidian';
 
 interface PluginSettings {
   preamblePath: string;
@@ -18,8 +18,12 @@ export default class JaxPlugin extends Plugin {
     this.settings = DEFAULT_SETTINGS;
   }
 
-  async loadPreamble() {
-    const preamble = await this.app.vault.adapter.read(this.settings.preamblePath);
+  /*
+    try loading this.settings.preamblePath
+    might raise an exception if the file does not exists
+  */
+  async tryloadPreamble() {
+    let preamble = await this.app.vault.adapter.read(normalizePath(this.settings.preamblePath));
 
     if (MathJax.tex2chtml == undefined) {
       MathJax.startup.ready = () => {
@@ -28,6 +32,26 @@ export default class JaxPlugin extends Plugin {
       };
     } else {
       MathJax.tex2chtml(preamble);
+    }
+  }
+
+  async createPreamble() {
+    let file = this.app.vault.getAbstractFileByPath(this.settings.preamblePath);
+    if (!file) {
+      file = await this.app.vault.create(this.settings.preamblePath, '');
+      if (file){
+        new Notice(this.settings.preamblePath + " created");
+        new Notice("modify it then reload");
+        return;
+      }else{
+        new Notice("error: " + this.settings.preamblePath + " not created");
+        return;
+      }
+    }
+
+    if(!(file instanceof TFile)){
+      new Notice(this.settings.preamblePath + " is not a file");
+      return;
     }
   }
 
@@ -52,8 +76,20 @@ export default class JaxPlugin extends Plugin {
       return;
     }
 
-    await this.loadPreamble();
-    // TODO: Refresh view?
+    // we first try to load it
+    // if it works it is loaded before everything else -> this is what we want
+    try {
+      await this.tryloadPreamble();
+      // TODO: Refresh view?
+    } catch(e) {
+      // otherwise we need to do it onlayoutready to create the file
+      // see https://forum.obsidian.md/t/getabstractfilebypath-does-not-function-as-expected/75844
+      this.app.workspace.onLayoutReady(
+        () => {
+          this.createPreamble();
+        }
+      );
+    }
   }
 
   onunload() {
