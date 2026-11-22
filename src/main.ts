@@ -41,7 +41,17 @@ export default class JaxPlugin extends Plugin {
   }
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    const data: unknown = await this.loadData();
+    const preamblePath =
+      typeof data === "object" && data !== null && "preamblePath" in data
+        ? data.preamblePath
+        : undefined;
+    this.settings = {
+      preamblePath:
+        typeof preamblePath === "string"
+          ? preamblePath
+          : DEFAULT_SETTINGS.preamblePath,
+    };
   }
 
   async saveSettings() {
@@ -62,12 +72,6 @@ export default class JaxPlugin extends Plugin {
     }
 
     await this.loadPreamble();
-    // TODO: Refresh view?
-  }
-
-  onunload() {
-    // TODO: Is it possible to remove our definitions?
-    console.log("Unloading Extended MathJax");
   }
 }
 

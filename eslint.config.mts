@@ -17,6 +17,7 @@ export default defineConfig(
     languageOptions: {
       globals: {
         ...globals.browser,
+        MathJax: "readonly",
       },
       parserOptions: {
         projectService: {
