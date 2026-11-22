@@ -5,6 +5,8 @@ import {
   PluginManifest,
   PluginSettingTab,
   Setting,
+  Notice,
+  normalizePath,
   type SettingDefinitionItem,
 } from "obsidian";
 
@@ -26,21 +28,6 @@ export default class JaxPlugin extends Plugin {
     this.settings = DEFAULT_SETTINGS;
   }
 
-  async loadPreamble() {
-    const preamble = await this.app.vault.adapter.read(
-      this.settings.preamblePath,
-    );
-
-    if (MathJax.tex2chtml == undefined) {
-      MathJax.startup.ready = () => {
-        MathJax.startup.defaultReady();
-        MathJax.tex2chtml(preamble);
-      };
-    } else {
-      MathJax.tex2chtml(preamble);
-    }
-  }
-
   async loadSettings() {
     const data: unknown = await this.loadData();
     const preamblePath =
@@ -57,6 +44,38 @@ export default class JaxPlugin extends Plugin {
 
   async saveSettings() {
     await this.saveData(this.settings);
+  }
+
+  async loadPreamble() {
+    const preamblePath = normalizePath(this.settings.preamblePath);
+    const adapter = this.app.vault.adapter;
+
+    let preamble: string;
+    try {
+      const file = await adapter.stat(preamblePath);
+      if (!file) {
+        await adapter.write(preamblePath, "");
+        new Notice(
+          `Preamble not found; created new file '${this.settings.preamblePath}'.`,
+        );
+      } else if (file.type !== "file") {
+        new Notice(`Error: preamble is not a file`);
+        return;
+      }
+      preamble = await adapter.read(preamblePath);
+    } catch (err) {
+      new Notice(`Error: preamble could not be accessed`);
+      return;
+    }
+
+    if (MathJax.tex2chtml == undefined) {
+      MathJax.startup.ready = () => {
+        MathJax.startup.defaultReady();
+        MathJax.tex2chtml(preamble);
+      };
+    } else {
+      MathJax.tex2chtml(preamble);
+    }
   }
 
   async onload() {
