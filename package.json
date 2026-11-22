@@ -1,6 +1,6 @@
 {
   "name": "obsidian-latex",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Adds support for a MathJax preamble in Obsidian.",
   "main": "main.js",
   "type": "module",

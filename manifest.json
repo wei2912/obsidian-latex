@@ -1,7 +1,7 @@
 {
   "id": "obsidian-latex",
   "name": "Extended MathJax",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "minAppVersion": "0.12.16",
   "description": "Adds support for a MathJax preamble in Obsidian.",
   "author": "Xavier Denis & Ng Wei En",
