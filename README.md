@@ -1,10 +1,16 @@
 ## Obsidian Extended MathJax
 
-This plugin extends the MathJax support in Obsidian with a MathJax preamble file which is loaded at startup. It also enables some additional MathJax extensions (notably `mhchem` and `bussproofs`). 
+### Development
+
+Use Node.js 24 and `npm ci` to install dependencies, `npm run dev` to build in watch mode, and `npm run build` for a production build.
+Run `npm run typecheck` and `npm run lint` to check the source.
+The pre-commit hook formats staged files and runs ESLint on staged JavaScript.
+
+This plugin extends the MathJax support in Obsidian with a MathJax preamble file which is loaded at startup.
 
 The preamble is stored in a `preamble.sty` file in the root of the vault.
 
-### Installation 
+### Installation
 
 1. Install 'Extended MathJax' from the Obsidian community plugin browser or by navigating to this link: [`obsidian://show-plugin?id=obsidian-latex`](obsidian://show-plugin?id=obsidian-latex).
 2. Create a `preamble.sty` file in the root of your vault using your choice of text editor.
@@ -12,7 +18,7 @@ The preamble is stored in a `preamble.sty` file in the root of the vault.
 
 ### Changing your preamble
 
-If you make changes to your preamble you will need to run the command "Reload app without saving". This will reload all your Obsidian plugins and your preamble. 
+If you make changes to your preamble you will need to run the command "Reload app without saving". This will reload all your Obsidian plugins and your preamble.
 
 ### Help, my preamble is not read!
 
@@ -25,6 +31,4 @@ There are two common reasons why your preamble is not read:
 
 ### Example
 
-Look at [`examples/stlc`](https://github.com/wei2912/obsidian-latex/tree/master/examples/stlc) for an example of an obsidian vault using a preamble to define custom macros. 
-
-
+Look at [`examples/stlc`](https://github.com/wei2912/obsidian-latex/tree/master/examples/stlc) for an example of an obsidian vault using a preamble to define custom macros.
