@@ -5,6 +5,7 @@ import {
   PluginManifest,
   PluginSettingTab,
   Setting,
+  type SettingDefinitionItem,
 } from "obsidian";
 
 interface PluginSettings {
@@ -81,6 +82,16 @@ class JaxPluginSettingTab extends PluginSettingTab {
   constructor(app: App, plugin: JaxPlugin) {
     super(app, plugin);
     this.plugin = plugin;
+  }
+
+  getSettingDefinitions(): SettingDefinitionItem<keyof PluginSettings>[] {
+    return [
+      {
+        name: "Preamble path",
+        desc: "Path to global preamble. (Requires reload!)",
+        control: { type: "text", key: "preamblePath" },
+      },
+    ];
   }
 
   display(): void {
